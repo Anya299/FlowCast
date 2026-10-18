@@ -1,6 +1,19 @@
+# Python environment and cache
 .venv/
 __pycache__/
 *.py[cod]
+
+# Secrets
 .env
 .env.*
 !.env.example
+
+# Datasets: keep local, regenerate through pipeline
+data/raw/
+data/interim/
+data/processed/
+extracted/
+
+# Local development
+.vscode/
+.DS_Store
