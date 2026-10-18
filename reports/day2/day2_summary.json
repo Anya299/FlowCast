@@ -1,0 +1,22 @@
+{
+    "project": "FlowCast",
+    "investigation": "Day 2 \u2014 Missingness and Anomalies",
+    "input_file": "data\\interim\\flowcast_integrated.csv",
+    "row_count": 176701,
+    "column_count": 30,
+    "numeric_column_count": 17,
+    "measurement_columns_investigated": [
+        "traffic_volume",
+        "vehicle_count",
+        "avg_speed",
+        "occupancy",
+        "travel_time",
+        "temperature",
+        "rainfall",
+        "visibility"
+    ],
+    "variables_with_missing_values": 8,
+    "total_missing_cells": 383765,
+    "total_anomaly_flags": 465,
+    "anomaly_screening_is_not_automatic_deletion": true
+}

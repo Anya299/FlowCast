@@ -1,0 +1,8 @@
+variable,screening_rule,flagged_count,percentage_of_all_records
+traffic_volume,value < 0,0,0.0
+vehicle_count,value < 0,0,0.0
+avg_speed,value < 0 or value > 200,236,0.13355894986446032
+occupancy,value < 0 or value > 100,229,0.12959745558881955
+travel_time,value < 0,0,0.0
+rainfall,value < 0,0,0.0
+visibility,value < 0,0,0.0
