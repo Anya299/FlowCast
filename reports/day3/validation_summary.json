@@ -1,0 +1,28 @@
+{
+    "project": "FlowCast",
+    "day": 3,
+    "validation_status": "REVIEW_REQUIRED",
+    "input_file": "data\\interim\\flowcast_integrated.csv",
+    "total_rows": 176701,
+    "total_columns": 29,
+    "expected_columns_missing": [],
+    "unexpected_columns": [],
+    "required_columns": [
+        "road_id",
+        "date",
+        "time"
+    ],
+    "required_columns_missing": [],
+    "total_missing_cells": 383765,
+    "variables_with_missing_values": 8,
+    "total_validation_findings": 465,
+    "error_findings": 0,
+    "review_findings": 465,
+    "info_findings": 0,
+    "rows_with_duplicate_road_time_keys": 0,
+    "missingness_report": "missingness_report.csv",
+    "issues_report": "validation_issues.csv",
+    "duplicate_report": "duplicate_records.csv",
+    "automatic_row_deletion": false,
+    "original_data_modified": false
+}
