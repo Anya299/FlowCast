@@ -1,0 +1,84 @@
+{
+    "project": "FlowCast",
+    "day": 9,
+    "stage": "Chronological supervised-learning experiment preparation",
+    "input_file": "data\\processed\\flowcast_features.csv",
+    "source_rows": 176701,
+    "target": "traffic_volume",
+    "baseline_features": [
+        "traffic_lag_30m",
+        "traffic_lag_1h",
+        "traffic_lag_90m",
+        "traffic_lag_24h",
+        "traffic_lag_7d",
+        "traffic_rolling_mean_3h",
+        "traffic_rolling_mean_6h",
+        "traffic_rolling_mean_24h",
+        "traffic_rolling_std_24h",
+        "hour_of_day",
+        "minute_of_hour",
+        "day_of_week_number",
+        "day_of_month",
+        "month",
+        "is_weekend",
+        "hour_sin",
+        "hour_cos",
+        "day_of_week_sin",
+        "day_of_week_cos",
+        "month_sin",
+        "month_cos",
+        "road_id_feature",
+        "latitude",
+        "longitude",
+        "road_capacity",
+        "public_holiday",
+        "event_flag",
+        "roadwork_flag"
+    ],
+    "split_policy": "Chronological; no random shuffling",
+    "boundaries": {
+        "training": "2025-01-01 through 2025-04-06",
+        "validation": "2025-04-07 through 2025-05-03",
+        "test": "2025-05-04 through 2025-05-31"
+    },
+    "target_quality": {
+        "target": "traffic_volume",
+        "negative_target_values_invalidated": 0,
+        "missing_target_rows": 4587,
+        "rows_before_target_filter": 176701,
+        "target_policy": "Missing and negative traffic-volume targets are excluded from supervised-learning splits. The original Day 8 feature dataset is not modified."
+    },
+    "audit": {
+        "baseline_feature_count": 28,
+        "target_in_feature_list": false,
+        "forbidden_feature_overlap": [],
+        "splits": {
+            "train": {
+                "rows": 109460,
+                "missing_target_rows": 0,
+                "rows_with_any_missing_feature": 30802,
+                "missing_feature_cells": 36137,
+                "first_timestamp": "2025-01-01 00:00:00",
+                "last_timestamp": "2025-04-06 23:30:00"
+            },
+            "validation": {
+                "rows": 30788,
+                "missing_target_rows": 0,
+                "rows_with_any_missing_feature": 6977,
+                "missing_feature_cells": 7699,
+                "first_timestamp": "2025-04-07 00:00:00",
+                "last_timestamp": "2025-05-03 23:30:00"
+            },
+            "test": {
+                "rows": 31866,
+                "missing_target_rows": 0,
+                "rows_with_any_missing_feature": 7404,
+                "missing_feature_cells": 8216,
+                "first_timestamp": "2025-05-04 00:00:00",
+                "last_timestamp": "2025-05-31 23:30:00"
+            }
+        },
+        "missing_feature_policy": "Missing lag and rolling features remain missing at this stage. No forward filling or future-based imputation is performed."
+    },
+    "model_training_performed": false
+}
