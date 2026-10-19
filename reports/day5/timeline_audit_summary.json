@@ -1,0 +1,40 @@
+{
+    "project": "FlowCast",
+    "audit_day": 5,
+    "audit_name": "Continuous Timeline Reconstruction and Missing Interval Audit",
+    "input_file": "data\\interim\\flowcast_integrated.csv",
+    "source_dataset_modified": false,
+    "missing_readings_imputed": false,
+    "duplicate_records_deleted": false,
+    "interval_minutes": 30,
+    "expected_intervals_per_full_day_per_road": 48,
+    "expected_road_count_from_specification": 25,
+    "source_rows": 176701,
+    "source_columns": 29,
+    "valid_timestamps": 176701,
+    "invalid_timestamps": 0,
+    "missing_road_identifiers": 0,
+    "unique_roads_found": 25,
+    "first_valid_timestamp": "2025-01-01 00:00:00",
+    "last_valid_timestamp": "2025-05-31 23:30:00",
+    "expected_timestamp_count": 7248,
+    "expected_road_time_combinations": 181200,
+    "observed_expected_intervals": 176701,
+    "missing_intervals": 4499,
+    "overall_timeline_coverage_percent": 97.517,
+    "road_time_keys_with_duplicates": 0,
+    "off_grid_timestamp_rows": 0,
+    "rows_with_timestamp_or_road_id_issues": 0,
+    "consecutive_gap_events": 4386,
+    "worst_coverage_road": {
+        "road_id": "NL-015",
+        "coverage_percent": 97.199,
+        "missing_intervals": 203
+    },
+    "lowest_coverage_day": {
+        "date": "2025-05-29",
+        "coverage_percent": 96.417,
+        "missing_intervals": 43
+    },
+    "interpretation_warning": "A missing road-time interval indicates that no valid timestamped row was observed for that road and interval. It does not independently prove sensor failure. The common timeline assumes all identified roads were expected to report across the full observed time range."
+}
