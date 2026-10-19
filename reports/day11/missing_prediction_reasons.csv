@@ -1,0 +1,3 @@
+model,missing_reason,missing_cases
+naive_30min,historical_reference_row_absent,1530
+seasonal_naive_24h,historical_reference_row_absent,1540
