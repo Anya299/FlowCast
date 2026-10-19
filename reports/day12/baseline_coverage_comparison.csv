@@ -1,0 +1,3 @@
+model,validation_rows,valid_predictions,missing_predictions,prediction_coverage_pct,missing_cases_classified,best_coverage_pct,coverage_gap_pp,is_best_coverage,coverage_status
+naive_30min,30788,29258,1530,95.0305,1530,95.0305,0.0,True,MEETS_THRESHOLD
+seasonal_naive_24h,30788,29248,1540,94.9981,1540,95.0305,0.0324,False,BELOW_THRESHOLD
