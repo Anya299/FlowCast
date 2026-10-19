@@ -1,0 +1,3 @@
+model,validation_rows,valid_predictions,missing_predictions,prediction_coverage_pct,mae,rmse
+naive_30min,30788,29258,1530,95.0305,68.8243,100.0342
+seasonal_naive_24h,30788,29248,1540,94.9981,94.6994,141.1094
