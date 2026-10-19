@@ -17,3 +17,9 @@ extracted/
 # Local development
 .vscode/
 .DS_Store
+
+# FlowCast experiment logs
+logs/
+
+# Generated Day 14 experiment outputs
+reports/day14/flowcast_*
