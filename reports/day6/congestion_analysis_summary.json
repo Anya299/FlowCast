@@ -1,0 +1,28 @@
+{
+    "available": true,
+    "missing_labels": 26624,
+    "non_missing_labels": 150077,
+    "category_count": 4,
+    "categories": [
+        {
+            "congestion_level": "free-flow",
+            "observation_count": 92107,
+            "percentage": 61.3731617769545
+        },
+        {
+            "congestion_level": "moderate",
+            "observation_count": 35818,
+            "percentage": 23.866415240176707
+        },
+        {
+            "congestion_level": "heavy",
+            "observation_count": 13873,
+            "percentage": 9.243921453653792
+        },
+        {
+            "congestion_level": "severe",
+            "observation_count": 8279,
+            "percentage": 5.516501529215003
+        }
+    ]
+}

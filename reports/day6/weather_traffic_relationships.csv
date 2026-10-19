@@ -1,0 +1,4 @@
+weather_variable,paired_observations,pearson_correlation_with_traffic
+temperature,169475,0.3862969550792374
+rainfall,172114,-0.038123029812690785
+visibility,170361,0.07292578983776626
