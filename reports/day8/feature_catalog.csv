@@ -1,0 +1,45 @@
+feature,description,role,availability,included_in_baseline
+traffic_lag_30m,Traffic volume exactly 30 minutes before the current timestamp.,baseline_model_input,Historical or planned information; verify operational availability.,True
+traffic_lag_1h,Traffic volume exactly one hour before the current timestamp.,baseline_model_input,Historical or planned information; verify operational availability.,True
+traffic_lag_90m,Traffic volume exactly 90 minutes before the current timestamp.,baseline_model_input,Historical or planned information; verify operational availability.,True
+traffic_lag_24h,Traffic volume at the same time on the previous day.,baseline_model_input,Historical or planned information; verify operational availability.,True
+traffic_lag_7d,Traffic volume at the same time seven days earlier.,baseline_model_input,Historical or planned information; verify operational availability.,True
+traffic_rolling_mean_3h,Mean of available traffic observations in the preceding three-hour window.,baseline_model_input,Historical or planned information; verify operational availability.,True
+traffic_rolling_mean_6h,Mean of available traffic observations in the preceding six-hour window.,baseline_model_input,Historical or planned information; verify operational availability.,True
+traffic_rolling_mean_24h,Mean of available traffic observations in the preceding 24-hour window.,baseline_model_input,Historical or planned information; verify operational availability.,True
+traffic_rolling_std_24h,Standard deviation of available traffic observations in the preceding 24-hour window.,baseline_model_input,Historical or planned information; verify operational availability.,True
+hour_of_day,"Calendar, road, or event context feature.",baseline_model_input,Historical or planned information; verify operational availability.,True
+minute_of_hour,"Calendar, road, or event context feature.",baseline_model_input,Historical or planned information; verify operational availability.,True
+day_of_week_number,"Calendar, road, or event context feature.",baseline_model_input,Historical or planned information; verify operational availability.,True
+day_of_month,"Calendar, road, or event context feature.",baseline_model_input,Historical or planned information; verify operational availability.,True
+month,"Calendar, road, or event context feature.",baseline_model_input,Historical or planned information; verify operational availability.,True
+is_weekend,Indicates Saturday or Sunday.,baseline_model_input,Historical or planned information; verify operational availability.,True
+hour_sin,Sine encoding of the time of day.,baseline_model_input,Historical or planned information; verify operational availability.,True
+hour_cos,Cosine encoding of the time of day.,baseline_model_input,Historical or planned information; verify operational availability.,True
+day_of_week_sin,Sine encoding of the day of the week.,baseline_model_input,Historical or planned information; verify operational availability.,True
+day_of_week_cos,Cosine encoding of the day of the week.,baseline_model_input,Historical or planned information; verify operational availability.,True
+month_sin,Sine encoding of the month.,baseline_model_input,Historical or planned information; verify operational availability.,True
+month_cos,Cosine encoding of the month.,baseline_model_input,Historical or planned information; verify operational availability.,True
+road_id_feature,Categorical road identifier.,baseline_model_input,Historical or planned information; verify operational availability.,True
+latitude,"Calendar, road, or event context feature.",baseline_model_input,Historical or planned information; verify operational availability.,True
+longitude,"Calendar, road, or event context feature.",baseline_model_input,Historical or planned information; verify operational availability.,True
+road_capacity,"Calendar, road, or event context feature.",baseline_model_input,Historical or planned information; verify operational availability.,True
+public_holiday,"Calendar, road, or event context feature.",baseline_model_input,Historical or planned information; verify operational availability.,True
+event_flag,"Calendar, road, or event context feature.",baseline_model_input,Historical or planned information; verify operational availability.,True
+roadwork_flag,"Calendar, road, or event context feature.",baseline_model_input,Historical or planned information; verify operational availability.,True
+temperature,Contextual feature.,conditional_context,Must be checked for availability at prediction time.,False
+rainfall,Contextual feature.,conditional_context,Must be checked for availability at prediction time.,False
+visibility,Contextual feature.,conditional_context,Must be checked for availability at prediction time.,False
+traffic_volume,Excluded from baseline model inputs to reduce target leakage risk.,target_or_excluded_field,Not used in baseline.,False
+vehicle_count,Excluded from baseline model inputs to reduce target leakage risk.,target_or_excluded_field,Not used in baseline.,False
+avg_speed,Excluded from baseline model inputs to reduce target leakage risk.,target_or_excluded_field,Not used in baseline.,False
+occupancy,Excluded from baseline model inputs to reduce target leakage risk.,target_or_excluded_field,Not used in baseline.,False
+travel_time,Excluded from baseline model inputs to reduce target leakage risk.,target_or_excluded_field,Not used in baseline.,False
+accident_count,Excluded from baseline model inputs to reduce target leakage risk.,target_or_excluded_field,Not used in baseline.,False
+congestion_level,Excluded from baseline model inputs to reduce target leakage risk.,target_or_excluded_field,Not used in baseline.,False
+temperature,Excluded from baseline model inputs to reduce target leakage risk.,target_or_excluded_field,Not used in baseline.,False
+rainfall,Excluded from baseline model inputs to reduce target leakage risk.,target_or_excluded_field,Not used in baseline.,False
+visibility,Excluded from baseline model inputs to reduce target leakage risk.,target_or_excluded_field,Not used in baseline.,False
+timestamp,Excluded from baseline model inputs to reduce target leakage risk.,target_or_excluded_field,Not used in baseline.,False
+date,Excluded from baseline model inputs to reduce target leakage risk.,target_or_excluded_field,Not used in baseline.,False
+time,Excluded from baseline model inputs to reduce target leakage risk.,target_or_excluded_field,Not used in baseline.,False
