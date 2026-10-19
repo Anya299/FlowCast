@@ -1,0 +1,20 @@
+{
+    "project": "FlowCast",
+    "day": 4,
+    "input_rows": 176701,
+    "input_columns": 29,
+    "expected_columns_missing": [],
+    "unexpected_columns": [],
+    "total_validation_findings": 465,
+    "error_findings": 0,
+    "review_findings": 465,
+    "info_findings": 0,
+    "missing_cells": 383765,
+    "columns_with_missing_values": 8,
+    "duplicate_rows_flagged": 0,
+    "valid_rows": 176236,
+    "review_rows": 465,
+    "quarantined_rows": 0,
+    "all_input_rows_preserved": true,
+    "automatic_row_deletion": false
+}
