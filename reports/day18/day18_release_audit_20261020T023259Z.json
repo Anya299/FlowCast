@@ -1,0 +1,128 @@
+{
+  "project": "FlowCast",
+  "day": 18,
+  "audit_name": "Forecasting Release Quality Gate",
+  "created_at_utc": "2026-10-20T02:32:59.252046+00:00",
+  "input_file": "C:\\Users\\DELL\\OneDrive\\Desktop\\FlowCast\\reports\\day17\\day17_predictions_20261020T021722Z.csv",
+  "minimum_coverage_pct": 80.0,
+  "total_prediction_rows": 61576,
+  "observed_models": [
+    "naive_30min",
+    "seasonal_naive_24h"
+  ],
+  "release_status": "FAIL",
+  "checks_passed": 9,
+  "checks_failed": 3,
+  "checks": [
+    {
+      "check": "valid_timestamps",
+      "passed": true,
+      "severity": "error",
+      "details": "Invalid timestamps: 0"
+    },
+    {
+      "check": "valid_road_identifiers",
+      "passed": true,
+      "severity": "error",
+      "details": "Every prediction must have a non-empty road identifier."
+    },
+    {
+      "check": "unique_prediction_keys",
+      "passed": true,
+      "severity": "error",
+      "details": "Duplicate road/timestamp/model rows: 0"
+    },
+    {
+      "check": "finite_actual_values",
+      "passed": true,
+      "severity": "error",
+      "details": "Missing or non-finite actual values: 0"
+    },
+    {
+      "check": "recognized_models",
+      "passed": true,
+      "severity": "error",
+      "details": "Observed models: ['naive_30min', 'seasonal_naive_24h']; unknown models: []"
+    },
+    {
+      "check": "both_baselines_present",
+      "passed": true,
+      "severity": "error",
+      "details": "Missing expected models: []"
+    },
+    {
+      "check": "forecast_horizon_alignment",
+      "passed": true,
+      "severity": "error",
+      "details": "naive_30min: incorrect horizons=0, incorrect non-missing references=0; seasonal_naive_24h: incorrect horizons=0, incorrect non-missing references=0"
+    },
+    {
+      "check": "prediction_values_are_finite_or_missing",
+      "passed": false,
+      "severity": "warning",
+      "details": "Missing predictions are allowed; missing or non-finite prediction values: 60472"
+    },
+    {
+      "check": "coverage_naive_30min",
+      "passed": false,
+      "severity": "error",
+      "details": "Coverage=0.08%; required minimum=80.00%."
+    },
+    {
+      "check": "coverage_seasonal_naive_24h",
+      "passed": false,
+      "severity": "error",
+      "details": "Coverage=3.51%; required minimum=80.00%."
+    },
+    {
+      "check": "common_population_available",
+      "passed": true,
+      "severity": "error",
+      "details": "Common valid prediction records: 44; common comparison rows: 2."
+    },
+    {
+      "check": "naive_baseline_comparison",
+      "passed": true,
+      "severity": "warning",
+      "details": "Common-population MAE: naive=14.1364; seasonal=15.5909."
+    }
+  ],
+  "model_metrics": [
+    {
+      "model": "naive_30min",
+      "total_predictions": 30788,
+      "valid_predictions": 24,
+      "missing_or_invalid_predictions": 30764,
+      "coverage_pct": 0.07795244900610628,
+      "mae": 14.583333333333334,
+      "rmse": 19.474342094150447,
+      "bias": -0.5833333333333334
+    },
+    {
+      "model": "seasonal_naive_24h",
+      "total_predictions": 30788,
+      "valid_predictions": 1080,
+      "missing_or_invalid_predictions": 29708,
+      "coverage_pct": 3.507860205274782,
+      "mae": 42.57222222222222,
+      "rmse": 63.060817205826524,
+      "bias": 13.068518518518518
+    }
+  ],
+  "common_population_metrics": [
+    {
+      "model": "naive_30min",
+      "common_observations": 22,
+      "mae": 14.136363636363637,
+      "rmse": 19.26018030690641,
+      "bias": 0.22727272727272727
+    },
+    {
+      "model": "seasonal_naive_24h",
+      "common_observations": 22,
+      "mae": 15.590909090909092,
+      "rmse": 19.091883092036785,
+      "bias": 7.5
+    }
+  ]
+}

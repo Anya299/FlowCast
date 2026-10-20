@@ -1,0 +1,13 @@
+check,passed,severity,details
+valid_timestamps,True,error,Invalid timestamps: 0
+valid_road_identifiers,True,error,Every prediction must have a non-empty road identifier.
+unique_prediction_keys,True,error,Duplicate road/timestamp/model rows: 0
+finite_actual_values,True,error,Missing or non-finite actual values: 0
+recognized_models,True,error,"Observed models: ['naive_30min', 'seasonal_naive_24h']; unknown models: []"
+both_baselines_present,True,error,Missing expected models: []
+forecast_horizon_alignment,True,error,"naive_30min: incorrect horizons=0, incorrect non-missing references=0; seasonal_naive_24h: incorrect horizons=0, incorrect non-missing references=0"
+prediction_values_are_finite_or_missing,False,warning,Missing predictions are allowed; missing or non-finite prediction values: 60472
+coverage_naive_30min,False,error,Coverage=0.08%; required minimum=80.00%.
+coverage_seasonal_naive_24h,False,error,Coverage=3.51%; required minimum=80.00%.
+common_population_available,True,error,Common valid prediction records: 44; common comparison rows: 2.
+naive_baseline_comparison,True,warning,Common-population MAE: naive=14.1364; seasonal=15.5909.
