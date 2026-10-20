@@ -1,0 +1,25 @@
+{
+    "project": "FlowCast",
+    "day": 15,
+    "analysis": "Forecast Error Analysis",
+    "generated_at_utc": "2026-10-19T06:51:46.271183+00:00",
+    "input_records": 61576,
+    "unique_roads": 25,
+    "models": [
+        "naive_30min",
+        "seasonal_naive_24h"
+    ],
+    "common_valid_observations": 27780,
+    "outputs": [
+        "common_population_comparison.csv",
+        "common_population_observations.csv",
+        "road_level_performance.csv",
+        "hourly_error_analysis.csv",
+        "day_of_week_error_analysis.csv",
+        "day15_error_analysis_report.md",
+        "figures/common_population_mae.png",
+        "figures/common_population_rmse.png",
+        "figures/mae_by_hour.png",
+        "figures/prediction_coverage_by_road.png"
+    ]
+}
