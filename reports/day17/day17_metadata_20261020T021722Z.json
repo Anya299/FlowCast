@@ -1,0 +1,85 @@
+{
+  "pipeline": "FlowCast Day 17",
+  "run_timestamp_utc": "20261020T021722Z",
+  "training_dataset": "C:\\Users\\DELL\\OneDrive\\Desktop\\FlowCast\\data\\processed\\day9\\flowcast_train.csv",
+  "validation_dataset": "C:\\Users\\DELL\\OneDrive\\Desktop\\FlowCast\\data\\processed\\day9\\flowcast_validation.csv",
+  "output_directory": "C:\\Users\\DELL\\OneDrive\\Desktop\\FlowCast\\reports\\day17",
+  "training_rows": 109460,
+  "validation_rows": 30788,
+  "split_summary": {
+    "train_start": "2025-01-01T00:00:00",
+    "train_end": "2025-04-06T23:30:00",
+    "validation_start": "2025-04-07T00:00:00",
+    "validation_end": "2025-05-03T23:30:00",
+    "chronological_split_passed": true
+  },
+  "prediction_audit": {
+    "passed": true,
+    "prediction_rows": 61576,
+    "unique_models": [
+      "naive_30min",
+      "seasonal_naive_24h"
+    ],
+    "duplicate_prediction_keys": 0,
+    "missing_prediction_count": 60472
+  },
+  "models": [
+    "naive_30min",
+    "seasonal_naive_24h"
+  ],
+  "metrics": [
+    {
+      "model": "naive_30min",
+      "total_observations": 30788,
+      "valid_predictions": 24,
+      "missing_predictions": 30764,
+      "coverage": 0.0007795244900610628,
+      "coverage_percent": 0.07795244900610628,
+      "mae": 14.583333333333334,
+      "rmse": 19.474342094150447,
+      "bias": -0.5833333333333334
+    },
+    {
+      "model": "seasonal_naive_24h",
+      "total_observations": 30788,
+      "valid_predictions": 1080,
+      "missing_predictions": 29708,
+      "coverage": 0.03507860205274782,
+      "coverage_percent": 3.507860205274782,
+      "mae": 42.57222222222222,
+      "rmse": 63.060817205826524,
+      "bias": 13.068518518518518
+    }
+  ],
+  "common_population_metrics": [
+    {
+      "model": "naive_30min",
+      "total_observations": 22,
+      "valid_predictions": 22,
+      "missing_predictions": 0,
+      "coverage": 1.0,
+      "coverage_percent": 100.0,
+      "mae": 14.136363636363637,
+      "rmse": 19.26018030690641,
+      "bias": 0.22727272727272727
+    },
+    {
+      "model": "seasonal_naive_24h",
+      "total_observations": 22,
+      "valid_predictions": 22,
+      "missing_predictions": 0,
+      "coverage": 1.0,
+      "coverage_percent": 100.0,
+      "mae": 15.590909090909092,
+      "rmse": 19.091883092036785,
+      "bias": 7.5
+    }
+  ],
+  "artifacts": {
+    "predictions": "C:\\Users\\DELL\\OneDrive\\Desktop\\FlowCast\\reports\\day17\\day17_predictions_20261020T021722Z.csv",
+    "metrics": "C:\\Users\\DELL\\OneDrive\\Desktop\\FlowCast\\reports\\day17\\day17_metrics_20261020T021722Z.csv",
+    "common_population": "C:\\Users\\DELL\\OneDrive\\Desktop\\FlowCast\\reports\\day17\\day17_common_population_20261020T021722Z.csv",
+    "common_population_metrics": "C:\\Users\\DELL\\OneDrive\\Desktop\\FlowCast\\reports\\day17\\day17_common_population_metrics_20261020T021722Z.csv",
+    "report": "C:\\Users\\DELL\\OneDrive\\Desktop\\FlowCast\\reports\\day17\\day17_pipeline_report_20261020T021722Z.md"
+  }
+}

@@ -1,0 +1,3 @@
+model,total_observations,valid_predictions,missing_predictions,coverage,coverage_percent,mae,rmse,bias
+naive_30min,22,22,0,1.0,100.0,14.136363636363637,19.26018030690641,0.22727272727272727
+seasonal_naive_24h,22,22,0,1.0,100.0,15.590909090909092,19.091883092036785,7.5
