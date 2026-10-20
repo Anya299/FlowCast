@@ -1,0 +1,21 @@
+﻿services:
+  flowcast-postgres:
+    image: postgres:17
+    container_name: flowcast-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: flowcast
+      POSTGRES_USER: flowcast
+      POSTGRES_PASSWORD: flowcast_dev_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - flowcast_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U flowcast -d flowcast"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  flowcast_postgres_data:
