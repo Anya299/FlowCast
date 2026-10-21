@@ -1,0 +1,32 @@
+# Run these commands from:
+# C:\Users\DELL\OneDrive\Desktop\FlowCast
+
+# 1) Activate your existing environment
+.\.venv\Scripts\Activate.ps1
+
+# 2) Install missing ML/test dependencies
+python -m pip install --upgrade pip
+python -m pip install scikit-learn joblib pytest
+
+# 3) Confirm the chronological split files exist
+Get-ChildItem data\processed\day9\flowcast_train.csv, data\processed\day9\flowcast_validation.csv, data\processed\day9\flowcast_test.csv
+
+# 4) Copy/extract the package contents into the FlowCast repository,
+#    merging the src and tests folders (do not replace the whole project).
+
+# 5) Run unit tests
+python -m pytest tests/day25 -q
+
+# 6) Train, compare validation baselines, refit on train+validation,
+#    evaluate the held-out test split, and save the artifact/reports
+python src/day25/train_model.py
+
+# 7) Inspect the report and metrics
+Get-Content reports\day25\DAY25_MODEL_PIPELINE_REPORT.md
+Get-Content models\day25\evaluation.json
+
+# 8) Inspect Git changes. Do not commit raw/split CSVs or model binaries by default.
+git status
+git add src/day25 tests/day25 reports/day25/DAY25_MODEL_PIPELINE_REPORT.md
+git commit -m "Add reproducible traffic forecasting model pipeline"
+git push origin main

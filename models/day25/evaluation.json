@@ -1,0 +1,121 @@
+{
+  "project": "FlowCast",
+  "day": 25,
+  "target": "traffic_volume",
+  "model": "HistGradientBoostingRegressor",
+  "model_artifact": "models\\day25\\traffic_model.joblib",
+  "feature_count": 28,
+  "features": [
+    "traffic_lag_30m",
+    "traffic_lag_1h",
+    "traffic_lag_90m",
+    "traffic_lag_24h",
+    "traffic_lag_7d",
+    "traffic_rolling_mean_3h",
+    "traffic_rolling_mean_6h",
+    "traffic_rolling_mean_24h",
+    "traffic_rolling_std_24h",
+    "hour_of_day",
+    "minute_of_hour",
+    "day_of_week_number",
+    "day_of_month",
+    "month",
+    "is_weekend",
+    "hour_sin",
+    "hour_cos",
+    "day_of_week_sin",
+    "day_of_week_cos",
+    "month_sin",
+    "month_cos",
+    "road_id_feature",
+    "latitude",
+    "longitude",
+    "road_capacity",
+    "public_holiday",
+    "event_flag",
+    "roadwork_flag"
+  ],
+  "forbidden_features_checked": [
+    "accident_count",
+    "avg_speed",
+    "congestion_level",
+    "occupancy",
+    "traffic_volume",
+    "travel_time",
+    "vehicle_count",
+    "volume_capacity_ratio"
+  ],
+  "split_source": "data/processed/day9",
+  "source_rows": {
+    "train": 109460,
+    "validation": 30788,
+    "test": 31866
+  },
+  "valid_target_rows": {
+    "train": 109460,
+    "validation": 30788,
+    "test": 31866
+  },
+  "validation_metrics": {
+    "model": {
+      "rows": 30788,
+      "mae": 39.184290130842854,
+      "rmse": 57.63513233566405,
+      "r2": 0.9564986548406988,
+      "mape_percent_nonzero_targets_only": 9.666822717477661,
+      "zero_target_rows_excluded_from_mape": 0
+    },
+    "persistence_lag_30m_baseline": {
+      "rows": 30788,
+      "mae": 76.7934584903209,
+      "rmse": 118.40939881701027,
+      "r2": 0.8163882586371382,
+      "mape_percent_nonzero_targets_only": 18.888315624363514,
+      "zero_target_rows_excluded_from_mape": 0
+    },
+    "training_mean_baseline": {
+      "rows": 30788,
+      "mae": 225.18682443376997,
+      "rmse": 276.48463800898344,
+      "r2": -0.0010830529790264443,
+      "mape_percent_nonzero_targets_only": 85.85211440294384,
+      "zero_target_rows_excluded_from_mape": 0
+    }
+  },
+  "test_metrics": {
+    "model": {
+      "rows": 31866,
+      "mae": 39.76150589125226,
+      "rmse": 58.13509920053938,
+      "r2": 0.9591218615528028,
+      "mape_percent_nonzero_targets_only": 9.405461989662479,
+      "zero_target_rows_excluded_from_mape": 0
+    },
+    "persistence_lag_30m_baseline": {
+      "rows": 31866,
+      "mae": 80.13428105190485,
+      "rmse": 121.94111567972199,
+      "r2": 0.8201482769541772,
+      "mape_percent_nonzero_targets_only": 19.093861537800798,
+      "zero_target_rows_excluded_from_mape": 0
+    },
+    "training_mean_baseline": {
+      "rows": 31866,
+      "mae": 233.04739117505682,
+      "rmse": 287.74104740101956,
+      "r2": -0.0014238139245932313,
+      "mape_percent_nonzero_targets_only": 82.57255162369087,
+      "zero_target_rows_excluded_from_mape": 0
+    }
+  },
+  "reload_prediction_check": {
+    "passed": true,
+    "rows_checked": 25
+  },
+  "caveats": [
+    "Metrics describe this dataset and split; they are not a guarantee of future performance.",
+    "Confirm public_holiday, event_flag, and roadwork_flag are known at prediction time.",
+    "The persistence baseline fills missing lag values with the median lag within each evaluated split; interpret those fallback rows cautiously.",
+    "MAPE excludes zero-target rows and should not be the sole selection metric."
+  ]
+}
