@@ -1,0 +1,60 @@
+FLOWCAST DAY 26 — POWERSHELL COMMANDS
+Run in: C:\Users\DELL\OneDrive\Desktop\FlowCast
+Keep the existing .venv active.
+
+1. Verify expected inputs:
+   Test-Path data\processed\day9\flowcast_test.csv
+   Test-Path models\day25\traffic_model.joblib
+
+2. Install optional plotting dependency (only if missing):
+   python -m pip install matplotlib
+
+3. Run unit tests:
+   python -m pytest tests\day26 -q
+
+4. Run reliability/error analysis:
+   python src\day26\run_analysis.py
+
+5. Inspect generated report:
+   Get-Content reports\day26\DAY26_RELIABILITY_REPORT.md
+
+6. Inspect the summary metrics:
+   Get-Content reports\day26\day26_reliability_summary.json
+
+7. Inspect largest errors:
+   Import-Csv reports\day26\top_20_absolute_errors.csv |
+     Select-Object -First 10 |
+     Format-Table -AutoSize
+
+8. Inspect worst-performing roads, if generated:
+   if (Test-Path reports\day26\error_by_road.csv) {
+     Import-Csv reports\day26\error_by_road.csv |
+       Select-Object -First 10 |
+       Format-Table -AutoSize
+   }
+
+9. Review feature availability checklist:
+   Get-Content reports\day26\feature_availability_audit.json
+
+10. Check outputs before Git:
+   Get-ChildItem reports\day26
+   git status
+
+11. Stage only source, tests, and reusable docs first:
+   git add src/day26/ tests/day26/ README_DAY26.md DAY26_POWERSHELL_COMMANDS.txt
+
+12. Review staged files:
+   git diff --cached --stat
+   git status
+
+13. Commit:
+   git commit -m "Add traffic model reliability and error analysis"
+
+14. Push:
+   git push origin main
+
+IMPORTANT:
+- Do NOT stage reports/day26 CSV files or PNGs unless intentionally publishing derived test predictions.
+- Do NOT stage data/raw, data/processed, .env, .venv, or models/day25/traffic_model.joblib.
+- Day 26 report files are generated locally; decide which small, non-sensitive summary files to publish after reviewing them.
+- If tests fail, stop and share the full error output before committing.
