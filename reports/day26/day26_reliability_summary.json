@@ -1,0 +1,81 @@
+{
+  "project": "FlowCast",
+  "day": 26,
+  "analysis": "Day 25 model reliability and error analysis",
+  "evaluated_partition": "data/processed/day9/flowcast_test.csv",
+  "model_artifact": "models\\day25\\traffic_model.joblib",
+  "target": "traffic_volume",
+  "features": [
+    "traffic_lag_30m",
+    "traffic_lag_1h",
+    "traffic_lag_90m",
+    "traffic_lag_24h",
+    "traffic_lag_7d",
+    "traffic_rolling_mean_3h",
+    "traffic_rolling_mean_6h",
+    "traffic_rolling_mean_24h",
+    "traffic_rolling_std_24h",
+    "hour_of_day",
+    "minute_of_hour",
+    "day_of_week_number",
+    "day_of_month",
+    "month",
+    "is_weekend",
+    "hour_sin",
+    "hour_cos",
+    "day_of_week_sin",
+    "day_of_week_cos",
+    "month_sin",
+    "month_cos",
+    "road_id_feature",
+    "latitude",
+    "longitude",
+    "road_capacity",
+    "public_holiday",
+    "event_flag",
+    "roadwork_flag"
+  ],
+  "rows_evaluated": 31866,
+  "overall_metrics_recomputed": {
+    "rows": 31866,
+    "mae": 39.76150589125226,
+    "rmse": 58.13509920053938,
+    "r2": 0.9591218615528028,
+    "mape_percent_nonzero_targets_only": 9.405461989662479,
+    "mean_error_predicted_minus_actual": 1.9662564874057606,
+    "mean_absolute_percentage_error_denominator_rows_excluded": 0
+  },
+  "residual_summary": {
+    "mean_error_predicted_minus_actual": 1.9662564874057606,
+    "median_error_predicted_minus_actual": 1.3292308211775037,
+    "error_std": 58.102749813670734,
+    "overprediction_rows": 16411,
+    "underprediction_rows": 15455,
+    "exact_prediction_rows": 0,
+    "p90_absolute_error": 95.28368608196831,
+    "p95_absolute_error": 126.70147182161045,
+    "p99_absolute_error": 198.08463110577918
+  },
+  "group_tables": {
+    "error_by_road": "reports\\day26\\error_by_road.csv",
+    "error_by_hour": "reports\\day26\\error_by_hour.csv",
+    "error_by_weekday": "reports\\day26\\error_by_weekday.csv",
+    "error_by_period": "reports\\day26\\error_by_period.csv",
+    "error_by_calendar_weekday": "reports\\day26\\error_by_calendar_weekday.csv"
+  },
+  "diagnostics_csv": "reports\\day26\\test_predictions_with_residuals.csv",
+  "top_20_errors_csv": "reports\\day26\\top_20_absolute_errors.csv",
+  "feature_availability_audit": "reports\\day26\\feature_availability_audit.json",
+  "plots": [
+    "residual_distribution.png",
+    "actual_vs_predicted.png",
+    "rmse_by_hour.png"
+  ],
+  "interpretation_guardrails": [
+    "This analysis re-evaluates the fixed Day 25 artifact; it does not retrain or tune it.",
+    "Error by group is descriptive and does not establish causality.",
+    "MAPE excludes zero-target rows; interpret alongside MAE, RMSE, and bias.",
+    "The test split has already been evaluated in Day 25; do not use it to tune features or hyperparameters.",
+    "Feature availability and time-series leakage require source-code and operational-cutoff verification."
+  ]
+}

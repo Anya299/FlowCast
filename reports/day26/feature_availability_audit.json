@@ -1,0 +1,34 @@
+{
+  "status": "REQUIRES_MANUAL_VERIFICATION",
+  "message": "Presence in a dataset does not prove a feature was available at the prediction cutoff. Verify each source's publication/ingestion time.",
+  "manual_review": [
+    {
+      "feature": "public_holiday",
+      "question": "Confirm the holiday calendar was published/known at the forecast cutoff."
+    },
+    {
+      "feature": "event_flag",
+      "question": "Confirm event schedules were known at the forecast cutoff and do not encode events inferred from the observed target period."
+    },
+    {
+      "feature": "roadwork_flag",
+      "question": "Confirm roadwork information was known at the forecast cutoff."
+    }
+  ],
+  "lag_and_rolling_features": {
+    "features": [
+      "traffic_lag_30m",
+      "traffic_lag_1h",
+      "traffic_lag_90m",
+      "traffic_lag_24h",
+      "traffic_lag_7d",
+      "traffic_rolling_mean_3h",
+      "traffic_rolling_mean_6h",
+      "traffic_rolling_mean_24h",
+      "traffic_rolling_std_24h"
+    ],
+    "required_rule": "Every lag/rolling window must use observations strictly before the forecast timestamp; rolling windows must be shifted before aggregation. Confirm this in the Day 8 feature-generation code.",
+    "status": "REQUIRES_SOURCE_CODE_AND_TIMESTAMP_AUDIT"
+  },
+  "current_period_sensor_outcomes_excluded_from_model_features": true
+}
