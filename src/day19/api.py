@@ -1,3 +1,5 @@
+"""HTTP API for FlowCast forecasting and traffic ingestion."""
+
 import logging
 import os
 
@@ -7,12 +9,16 @@ from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
+from sqlalchemy.engine import Engine
+from sqlalchemy.exc import SQLAlchemyError
 
 from src.day19.schemas import (
     ForecastRequest,
     ForecastResponse,
     HealthResponse,
     ReadinessResponse,
+    TrafficIngestionResponse,
+    TrafficObservationBatchRequest,
 )
 from src.day19.service import (
     ForecastService,
@@ -20,6 +26,16 @@ from src.day19.service import (
     ReferenceUnavailableError,
     RoadNotFoundError,
     load_history,
+)
+from src.day20.database import (
+    build_engine_from_environment,
+    build_session_factory,
+)
+from src.day20.repository import TrafficObservationRepository
+from src.day21.ingestion_service import (
+    IngestionResult,
+    IngestionValidationError,
+    TrafficIngestionService,
 )
 
 
@@ -40,7 +56,6 @@ HISTORY_PATH = Path(
     )
 )
 
-
 logging.basicConfig(
     level=logging.INFO,
     format=(
@@ -55,12 +70,15 @@ logger = logging.getLogger("flowcast.api")
 def create_app(
     history_path: Path | None = None,
     history_data=None,
+    ingestion_service: TrafficIngestionService | None = None,
 ) -> FastAPI:
-    """
-    Application factory.
+    """Create the FlowCast application.
 
-    Production use loads history during startup.
-    Tests can inject a small deterministic dataset.
+    Production startup loads forecasting history and configures
+    PostgreSQL-backed ingestion.
+
+    Tests can inject historical data and an ingestion service,
+    avoiding a dependency on a live database.
     """
 
     resolved_path = history_path or HISTORY_PATH
@@ -68,6 +86,12 @@ def create_app(
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         logger.info("Starting FlowCast API.")
+
+        engine: Engine | None = None
+
+        app.state.forecast_service = None
+        app.state.ingestion_service = ingestion_service
+        app.state.database_engine = None
 
         try:
             if history_data is not None:
@@ -83,6 +107,27 @@ def create_app(
                 app.state.forecast_service.unique_roads,
             )
 
+            # Injected test services do not require a database.
+            # Production startup configures PostgreSQL ingestion.
+            if ingestion_service is None and history_data is None:
+                engine = build_engine_from_environment()
+
+                session_factory = build_session_factory(engine)
+
+                repository = TrafficObservationRepository(
+                    session_factory
+                )
+
+                app.state.ingestion_service = TrafficIngestionService(
+                    repository
+                )
+
+                app.state.database_engine = engine
+
+                logger.info(
+                    "PostgreSQL ingestion service configured."
+                )
+
             yield
 
         except Exception:
@@ -93,15 +138,21 @@ def create_app(
 
         finally:
             app.state.forecast_service = None
+            app.state.ingestion_service = None
+            app.state.database_engine = None
+
+            if engine is not None:
+                engine.dispose()
+
             logger.info("FlowCast API stopped.")
 
     app = FastAPI(
-        title="FlowCast Forecasting API",
+        title="FlowCast Traffic Intelligence API",
         description=(
-            "Versioned API for traffic forecasting using "
-            "historical-reference baseline strategies."
+            "Versioned API for historical-reference traffic "
+            "forecasting and validated traffic observation ingestion."
         ),
-        version="0.1.0",
+        version="0.2.0",
         lifespan=lifespan,
     )
 
@@ -142,9 +193,7 @@ def create_app(
     async def health():
         """Liveness check: the application process is responding."""
 
-        return HealthResponse(
-            status="ok",
-        )
+        return HealthResponse(status="ok")
 
     @app.get(
         "/readyz",
@@ -152,7 +201,7 @@ def create_app(
         tags=["Operations"],
     )
     async def readiness(request: Request):
-        """Readiness check: forecasting data is available."""
+        """Readiness check for the forecasting service."""
 
         service = getattr(
             request.app.state,
@@ -238,6 +287,75 @@ def create_app(
                 status_code=500,
                 detail="Historical data failed validation.",
             ) from exc
+
+    @app.post(
+        "/v1/traffic/observations",
+        response_model=TrafficIngestionResponse,
+        status_code=200,
+        tags=["Traffic Ingestion"],
+    )
+    async def ingest_observations(
+        payload: TrafficObservationBatchRequest,
+        request: Request,
+    ):
+        """Validate and persist a batch of traffic observations."""
+
+        service = getattr(
+            request.app.state,
+            "ingestion_service",
+            None,
+        )
+
+        request_id = request.state.request_id
+
+        if service is None:
+            raise HTTPException(
+                status_code=503,
+                detail="Traffic ingestion service is not configured.",
+            )
+
+        observations = [
+            observation.model_dump()
+            for observation in payload.observations
+        ]
+
+        try:
+            result: IngestionResult = service.ingest(observations)
+
+        except IngestionValidationError as exc:
+            raise HTTPException(
+                status_code=422,
+                detail=str(exc),
+            ) from exc
+
+        except SQLAlchemyError as exc:
+            logger.exception(
+                "Traffic ingestion database failure. request_id=%s",
+                request_id,
+            )
+
+            raise HTTPException(
+                status_code=503,
+                detail="Traffic ingestion is temporarily unavailable.",
+            ) from exc
+
+        logger.info(
+            "Traffic batch processed. request_id=%s "
+            "received=%s validated=%s inserted=%s "
+            "skipped_duplicates=%s",
+            request_id,
+            result.received,
+            result.validated,
+            result.inserted,
+            result.skipped_duplicates,
+        )
+
+        return TrafficIngestionResponse(
+            received=result.received,
+            validated=result.validated,
+            inserted=result.inserted,
+            skipped_duplicates=result.skipped_duplicates,
+        )
 
     return app
 

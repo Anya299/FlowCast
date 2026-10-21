@@ -89,3 +89,78 @@ class ReadinessResponse(BaseModel):
     status: str
     historical_records: int
     unique_roads: int
+
+
+
+MAX_INGESTION_BATCH_SIZE = 1000
+
+
+class TrafficObservationInput(BaseModel):
+    """Validated representation of a single traffic observation."""
+
+    model_config = ConfigDict(
+        extra="forbid",
+        str_strip_whitespace=True,
+    )
+
+    road_id: str = Field(
+        min_length=1,
+        max_length=100,
+        description="Stable identifier for the road.",
+    )
+
+    timestamp: datetime = Field(
+        description=(
+            "Observation timestamp. Naive timestamps follow the "
+            "dataset's canonical timezone convention."
+        ),
+    )
+
+    traffic_volume: float = Field(
+        ge=0,
+        allow_inf_nan=False,
+        description="Nonnegative observed traffic volume.",
+    )
+
+    @field_validator("road_id")
+    @classmethod
+    def validate_road_id(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("road_id cannot be blank.")
+
+        return value
+
+    @field_validator("traffic_volume", mode="before")
+    @classmethod
+    def reject_boolean_traffic_volume(cls, value):
+        if isinstance(value, bool):
+            raise ValueError(
+                "traffic_volume must be a numeric value, not a boolean."
+            )
+
+        return value
+
+
+class TrafficObservationBatchRequest(BaseModel):
+    """Request containing a bounded batch of traffic observations."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    observations: list[TrafficObservationInput] = Field(
+        min_length=1,
+        max_length=MAX_INGESTION_BATCH_SIZE,
+        description=(
+            "Between 1 and 1000 observations per request."
+        ),
+    )
+
+
+class TrafficIngestionResponse(BaseModel):
+    """Summary of a successfully processed ingestion batch."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    received: int = Field(ge=0)
+    validated: int = Field(ge=0)
+    inserted: int = Field(ge=0)
+    skipped_duplicates: int = Field(ge=0)
