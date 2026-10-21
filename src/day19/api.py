@@ -2,6 +2,7 @@
 
 import logging
 import os
+from time import perf_counter
 
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -158,31 +159,87 @@ def create_app(
 
     @app.middleware("http")
     async def request_id_middleware(request: Request, call_next):
+        """Trace requests and log their HTTP outcome and duration."""
+
         request_id = str(uuid4())
         request.state.request_id = request_id
 
-        response = await call_next(request)
+        started_at = perf_counter()
+        status_code = 500
 
-        response.headers["X-Request-ID"] = request_id
+        try:
+            response = await call_next(request)
+            status_code = response.status_code
+            response.headers["X-Request-ID"] = request_id
+            return response
 
-        return response
+        except Exception:
+            # The generic exception handler returns a sanitized response.
+            # Log only request metadata here; the exception handler records
+            # the traceback so the same failure is not logged twice.
+            raise
+
+        finally:
+            duration_ms = (perf_counter() - started_at) * 1000
+
+            logger.info(
+                "request_completed request_id=%s method=%s "
+                "path=%s status_code=%s duration_ms=%.3f",
+                request_id,
+                request.method,
+                request.url.path,
+                status_code,
+                duration_ms,
+            )
 
     @app.exception_handler(HTTPException)
     async def http_exception_handler(
         request: Request,
         exc: HTTPException,
     ):
+        request_id = getattr(request.state, "request_id", None)
+
+        response_headers = dict(exc.headers or {})
+        if request_id:
+            response_headers["X-Request-ID"] = request_id
+
         return JSONResponse(
             status_code=exc.status_code,
             content={
                 "detail": exc.detail,
-                "request_id": getattr(
-                    request.state,
-                    "request_id",
-                    None,
-                ),
+                "request_id": request_id,
             },
-            headers=exc.headers,
+            headers=response_headers,
+        )
+
+    @app.exception_handler(Exception)
+    async def unexpected_exception_handler(
+        request: Request,
+        exc: Exception,
+    ):
+        """Log unexpected failures without exposing internals to clients."""
+
+        request_id = getattr(request.state, "request_id", None)
+
+        logger.error(
+            "Unhandled API exception request_id=%s method=%s path=%s",
+            request_id,
+            request.method,
+            request.url.path,
+            exc_info=(type(exc), exc, exc.__traceback__),
+        )
+
+        response_headers = {}
+        if request_id:
+            response_headers["X-Request-ID"] = request_id
+
+        return JSONResponse(
+            status_code=500,
+            content={
+                "detail": "Internal server error.",
+                "request_id": request_id,
+            },
+            headers=response_headers,
         )
 
     @app.get(
