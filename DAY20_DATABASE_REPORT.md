@@ -60,9 +60,9 @@ Run:
 
 Record the actual result here after executing the commands.
 
-- PostgreSQL connection: PASS ? PostgreSQL 17.11; database `flowcast`.
-- Schema verification: PASS ? `traffic_observations`, composite primary key, and database check constraints verified.
-- Integration tests: PASS ? 16 tests passed in 2.69 seconds.
+- PostgreSQL connection: PASS - PostgreSQL 17.11; database `flowcast`.
+- Schema verification: PASS - `traffic_observations`, composite primary key, and database check constraints verified.
+- Integration tests: PASS - 16 tests passed in 2.69 seconds.
 
 ## Engineering Limitations
 
